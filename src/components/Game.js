@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 
 /**
@@ -8,6 +8,10 @@ const Game = () => {
   const [client, setClient] = useState(null);
   const [upgrades, setUpgrades] = useState(null);
   const [gameState, setGameState] = useState(null);
+
+  const score = useMemo(() => {
+    return gameState?.score || 0;
+  }, [gameState]);
 
   const SERVER_URL  = "http://localhost:4000";
 
@@ -57,7 +61,7 @@ const Game = () => {
     <>
       <h2>Kukan kasvatus peli</h2>
       {gameState ? 
-        <>      <p>Score: { gameState.score != null ? gameState.score : "Loading..." }</p>
+        <>      <p>Kukkasi on: { gameState.score != null ? gameState.score : "Loading..." } metriä pitkä</p>
           <button onClick={ clickKukka }>Rakasta kukkaasi</button></>
         : null}
 
@@ -65,18 +69,21 @@ const Game = () => {
       {upgrades ? 
         <>
           <ul>{upgrades.map((upgrade) => {
+            const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
+            const cost = usersUpgrade ? usersUpgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
+            const isClickable = score >= cost;
             return (
               <li
                 key={upgrade.type}
-                className="p-2 md:p-4 hover:bg-gray-400 cursor-pointer"
-                onClick={() => clickUpgrade(upgrade.type)}
+                className={`p-2 md:p-4 ${isClickable ? "hover:bg-gray-400 cursor-pointer" : "opacity-50"}`}
+                onClick={isClickable ? () => clickUpgrade(upgrade.type) : undefined}
               >
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>
                   <span>lvl 0</span>
                 </div>
                 
-                <span>hinta: {upgrade.cost}</span>
+                <span>hinta: {cost} metriä</span>
               </li>
             );
           })}
