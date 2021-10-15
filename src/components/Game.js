@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
+import GameQuote from "./GameQuote";
 import Leaderboard from "./Leaderboard";
 
 /**
@@ -69,8 +70,11 @@ const Game = () => {
       <Leaderboard leaderboard={leaderboard} />
 
       {gameState ? 
-        <>      <p>Kukkasi on: { gameState.score != null ? gameState.score : "Loading..." } metriä pitkä</p>
-          <button onClick={ clickKukka }>Rakasta kukkaasi</button></>
+        <>     
+          <h1>Kukkasi on: { gameState.score != null ? gameState.score : "Loading..." } metriä pitkä</h1>
+          <GameQuote score={score} />
+          <button onClick={ clickKukka }>Rakasta kukkaasi</button>
+        </>
         : null}
 
       {/* Upgrades listed here */}
