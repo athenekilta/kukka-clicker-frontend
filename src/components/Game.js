@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
+import Leaderboard from "./Leaderboard";
 
 /**
  * The main game component
  */
 const Game = () => {
   const [client, setClient] = useState(null);
+  const [leaderboard, setLeaderboard] = useState(null);
   const [upgrades, setUpgrades] = useState(null);
   const [gameState, setGameState] = useState(null);
 
@@ -50,6 +52,9 @@ const Game = () => {
       socketClient.on("set_state", (state) => {
         setGameState(state);
       });
+      socketClient.on("leaderboard", (users) => {
+        setLeaderboard(users);
+      });
 
       // set
       setClient(socketClient);
@@ -60,6 +65,9 @@ const Game = () => {
   return (
     <>
       <h2>Kukan kasvatus peli</h2>
+
+      <Leaderboard leaderboard={leaderboard} />
+
       {gameState ? 
         <>      <p>Kukkasi on: { gameState.score != null ? gameState.score : "Loading..." } metriä pitkä</p>
           <button onClick={ clickKukka }>Rakasta kukkaasi</button></>
