@@ -11,6 +11,16 @@ const Game = () => {
 
   const SERVER_URL  = "http://localhost:4000";
 
+  const clickKukka = () => {
+    if (!client) return; 
+    client.emit("click");
+  };
+
+  const clickUpgrade = (type) => {
+    if (!client) return; 
+    client.emit(type);
+  };
+
   // init upgrades
   useEffect(() => {
     const getUpgrades = async () => {
@@ -48,7 +58,7 @@ const Game = () => {
       <h2>Kukan kasvatus peli</h2>
       {gameState ? 
         <>      <p>Score: { gameState.score != null ? gameState.score : "Loading..." }</p>
-          <button onClick={ () => client.emit("click") }>Rakasta kukkaasi</button></>
+          <button onClick={ clickKukka }>Rakasta kukkaasi</button></>
         : null}
 
       {/* Upgrades listed here */}
@@ -56,7 +66,11 @@ const Game = () => {
         <>
           <ul>{upgrades.map((upgrade) => {
             return (
-              <li key={upgrade.type} className="p-2 md:p-4 hover:bg-gray-400 cursor-pointer">
+              <li
+                key={upgrade.type}
+                className="p-2 md:p-4 hover:bg-gray-400 cursor-pointer"
+                onClick={() => clickUpgrade(upgrade.type)}
+              >
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>
                   <span>lvl 0</span>
