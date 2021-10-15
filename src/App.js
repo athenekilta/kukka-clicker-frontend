@@ -5,7 +5,7 @@ import Game from "./components/Game";
 import "./App.scss";
 
 const App = () => {
-  const [appState, setAppState] = useState("register");
+  const [appState, setAppState] = useState("game");
 
   const stateComponents = {
     "register": <Register setAppState={setAppState} />,
