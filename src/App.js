@@ -1,22 +1,20 @@
 import React, { useState } from "react";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Auth from "./components/Auth";
 import Game from "./components/Game";
 import "./App.scss";
 
 const App = () => {
-  const [appState, setAppState] = useState("game");
-
-  const stateComponents = {
-    "register": <Register setAppState={setAppState} />,
-    "login": <Login setAppState={setAppState} />,
-    "game": <Game />,
-  };
+  const [userData, setUserData] = useState(null);
 
   return (
     <div>
       <h1>Kukkaclicker</h1>
-      {stateComponents[appState]}
+      {
+        userData
+          ? <Game userData={userData} />
+          : <Auth setUserData={setUserData} />
+      }
+      <p>{ userData ? `Logged in as ${userData.username}` : "Not logged in" }</p>
     </div>
   );
 };
