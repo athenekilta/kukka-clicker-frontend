@@ -10,7 +10,7 @@ const App = () => {
   useEffect(() => {
     const fetchUser =  async() => {
       const user = await authService.validate();
-      if (user) {
+      if (user?.username) {
         setUserData(user);
       }
     };
