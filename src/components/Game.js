@@ -119,10 +119,10 @@ const Game = ({ user }) => {
             return (
               <li
                 key={upgrade.type}
-                className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-gray-400 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
+                className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-blue-200 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
                 onClick={isClickable ? onClick : undefined}
               >
-                {usersUpgrade ?  <UpgradeRewardProgress upgrade={usersUpgrade} upgradeDefinition={upgrade} /> : null}
+                <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
 
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>
