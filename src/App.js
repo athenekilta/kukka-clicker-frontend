@@ -9,9 +9,9 @@ const App = () => {
 
   useEffect(() => {
     const fetchUser =  async() => {
-      const user = await authService.validate();
-      if (user?.username) {
-        setUserData(user);
+      const res = await authService.validate();
+      if (res.data?.user?.username) {
+        setUserData(res.data.user);
       }
     };
     fetchUser();
