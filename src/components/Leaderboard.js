@@ -5,7 +5,7 @@ const Leaderboard = ({ leaderboard = [] })=> {
     <ul>
       {leaderboard?.map((user, i) => {
         return (
-          <li key={user.username}>{i}. {user.username}: {user.score}</li>
+          <li key={user.username}>{i+1}. {user.username}: {user.score}</li>
         );
       })}
     </ul>
