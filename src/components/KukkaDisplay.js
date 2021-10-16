@@ -73,16 +73,26 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
     <div className="w-full h-full relative">
       <canvas id="kukka-scene" className="w-full"/>
 
-      <div className="absolute top-0 flex flex-col py-12 px-8 items-center z-10">  
-        <h1>Kukan kasvatus peli</h1>
-        <p>{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
-        <h1>Kukkasi on <Score value={ score } /> pitkä</h1>
-        <GameQuote score={score} />
-        <button 
-          onClick={ clickKukka }
-          className="bg-yellow-400 rounded-full p-4">
+      <div className="absolute top-0 left-0 z-10 w-full h-full">
+        <div className="flex w-full justify-between items-center p-2 md:p-4">
+          <h1 className="text-xl font-bold">Kukan kasvatus peli</h1>
+          <p className="text-xl font-bold">{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
+        </div>
+
+        <div 
+          style={{ left: "50%", top: "50%", transform: "translateX(-50%) translateY(-50%)"}}
+          className="absolute top-0 left-0 flex flex-col items-center bg-white p-4 bg-opacity-60 rounded-lg"
+        >
+          <h1 className="font-extrabold">Kukkasi on</h1>
+          <h1 className="font-extrabold text-2xl"><Score value={ score } /></h1>
+          <h1 className="font-extrabold">pitkä</h1>
+          <GameQuote score={score} />
+          <button 
+            onClick={ clickKukka }
+            className="bg-yellow-400 rounded-full p-4">
             Rakasta kukkaasi
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   );
