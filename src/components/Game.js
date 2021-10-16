@@ -76,7 +76,7 @@ const Game = ({ user }) => {
     const socketClient = initGame();
     return () => {
       if (socketClient) {
-        socketClient.emit("disconnect");
+        socketClient.disconnect();
       }
     };
   }, [user]);
@@ -103,12 +103,15 @@ const Game = ({ user }) => {
             const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
             const isClickable = score >= cost;
             const onClick = () => clickUpgrade(upgrade.type);
+
             return (
               <li
                 key={upgrade.type}
-                className={`p-2 md:p-4 ${isClickable ? "hover:bg-gray-400 cursor-pointer" : "opacity-50"}`}
+                className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-gray-400 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
                 onClick={isClickable ? onClick : undefined}
               >
+                <div style={usersUpgrade ? { width: `${((Date.now() - usersUpgrade.previous_time) / usersUpgrade.time_interval) * 100}%`, zIndex: -1 }: undefined} className="absolute top-0 left-0 h-full bg-yellow-200"></div>
+
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>
                   <p className="text-xs italic">{upgrade.description}</p>
