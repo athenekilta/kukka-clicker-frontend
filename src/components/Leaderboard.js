@@ -1,4 +1,5 @@
 import React from "react";
+import Score from "./Score";
 
 const Leaderboard = ({ leaderboard = [] })=> {
   return (
@@ -11,7 +12,7 @@ const Leaderboard = ({ leaderboard = [] })=> {
             <li
               key={user.username}
               className="p-2"
-            >{i+1}. <b>{medal} {user.username}</b>: {user.score}</li>
+            >{medal ? medal : i+1 + "."} <b>{user.username}</b>: <Score value={user.score} /></li>
           );
         })}
       </ul>
