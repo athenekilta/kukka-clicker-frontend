@@ -82,22 +82,24 @@ const Game = ({ user }) => {
   }, [user]);
 
   return (
-    <>
-      <h2>Kukan kasvatus peli</h2>
-
-      <Leaderboard leaderboard={leaderboard} />
-
+    <div className="md:grid grid-cols-2">
+      
       {gameState ? 
-        <>     
+        <div className="flex flex-col py-12 px-8 items-center">  
+          <h1>Kukan kasvatus peli</h1>
+          <p>{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
           <h1>Kukkasi on: { gameState.score != null ? gameState.score : "Loading..." } metriä pitkä</h1>
           <GameQuote score={score} />
-          <button onClick={ clickKukka }>Rakasta kukkaasi</button>
-        </>
+          <button onClick={ clickKukka }
+            className="bg-green-700 p-4 rounded-md">Rakasta kukkaasi</button>
+        </div>
         : null}
 
-      {/* Upgrades listed here */}
-      {upgrades ? 
-        <>
+      <div className="md:h-screen overflow-y-auto">
+        <Leaderboard leaderboard={leaderboard} />
+        {/* Upgrades listed here */}
+        {upgrades ? 
+
           <ul>{upgrades.map((upgrade) => {
             const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
             const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
@@ -123,8 +125,9 @@ const Game = ({ user }) => {
             );
           })}
           </ul>
-        </> : null}
-    </>
+          : null}
+      </div>
+    </div>
   );
 };
 

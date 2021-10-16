@@ -18,15 +18,13 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Kukkaclicker</h1>
+    <main className="w-screen h-screen overflow-hidden">
       {
         user
           ? <Game user={user} />
           : <Auth setUser={setUser} />
       }
-      <p>{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
-    </div>
+    </main>
   );
 };
 
