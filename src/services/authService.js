@@ -2,6 +2,15 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:4000";
 
+const validate = async () => {
+  try {
+    const res = await axios.get(`${baseUrl}/api/auth`);
+    return res;
+  } catch (e) {
+    return e.response;
+  }
+};
+
 const auth = async (type, username, password) => {
   try {
     const res = await axios.post(`${baseUrl}/api/${type}`, {
@@ -23,6 +32,7 @@ const register = async (username, password) => {
 };
 
 export default {
+  validate,
   register,
   login,
 };
