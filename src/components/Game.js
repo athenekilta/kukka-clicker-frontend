@@ -96,7 +96,7 @@ const Game = ({ user }) => {
       
       <div>  
         {gameState ?
-          <KukkaDisplay score={score} user={user} clickKukka={clickKukka} />
+          <KukkaDisplay score={score} user={user} upgrades={gameState.upgrades} clickKukka={clickKukka} />
           : null}
       </div>
 

@@ -5,7 +5,7 @@ import Score from "./Score";
 
 let mem = null;
 
-const KukkaDisplay = ({ score, user, clickKukka }) => {
+const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
   const createScene = () => {
     const scene = document.getElementById("kukka-scene");
     if (!scene) return;
@@ -44,6 +44,27 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
       leaf.visible = false;
     }
 
+    // leaves
+    const arrows = [];
+    const arrowTexture = PIXI.Texture.from("/assets/arrow.png");
+    const ARROW_AMOUNT = upgrades.reduce((l, r) => l + r.level, 0);
+    for (let i = 0; i < ARROW_AMOUNT; ++i) {
+      const arrow = new PIXI.Sprite(arrowTexture);
+      arrow.anchor.set(0.5);
+      arrow.x = Math.random() * app.screen.width;
+      arrow.y = Math.random() * app.screen.height;
+      // leaf.x = Math.random() * app.screen.width;
+      // leaf.y = Math.random() * app.screen.height;
+      arrow.rotation = Math.PI / 2;
+      const scale = Math.max(Math.random(), 0.3);
+      arrow.scale.x = scale;
+      arrow.scale.y = scale;
+      arrow.zIndex = Math.floor(scale * 1000);
+      arrow.speed = scale * 5;
+      arrows.push(arrow);
+      app.stage.addChild(arrow);
+    }
+
     // create a new Sprite from an image path
     const bunny = PIXI.Sprite.from("/assets/kukka.png");
 
@@ -68,6 +89,12 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
           leaf.visible = true;
         } else {
           leaf.visible = false;
+        }
+      });
+      arrows.forEach((arrow) => {
+        arrow.y -= arrow.speed * 0.1 * delta;
+        if (arrow.y < -50) {
+          arrow.y = app.screen.height + 50;
         }
       });
       const scale = Math.max(0.15, Math.min(x * 0.5, 0.5));
