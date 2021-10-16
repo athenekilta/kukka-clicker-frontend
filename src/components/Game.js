@@ -94,7 +94,7 @@ const Game = ({ user }) => {
         <>
           <ul>{upgrades.map((upgrade) => {
             const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
-            const cost = usersUpgrade ? usersUpgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
+            const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
             const isClickable = score >= cost;
             const onClick = () => clickUpgrade(upgrade.type);
             return (
@@ -106,7 +106,7 @@ const Game = ({ user }) => {
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>
                   <p className="text-xs italic">{upgrade.description}</p>
-                  <span>lvl 0</span>
+                  <span>lvl {usersUpgrade?.level || 0}</span>
                 </div>
                 
                 <span>hinta: {cost} metriä</span>
