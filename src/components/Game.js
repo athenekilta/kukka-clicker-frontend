@@ -130,7 +130,12 @@ const Game = ({ user }) => {
                   <span className="whitespace-nowrap">lvl {usersUpgrade?.level || 0}</span>
                 </div>
                 
-                <span>{usersUpgrade ? "päivityksen hinta" : "hinta"}: {cost} metriä</span>
+                <span>
+                  {usersUpgrade
+                    ? "päivityksen hinta"
+                    : "hinta"
+                  }: <Score value={cost} />
+                </span>
               </li>
             );
           })}
