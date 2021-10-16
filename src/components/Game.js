@@ -161,6 +161,12 @@ const Game = ({ user }) => {
             </ul>
           </>
           : null}
+
+        <div className="footer p-6 w-full">
+          <p className="text-center text-gray-300">Copyright 2021, Kukan digiloikkaajat – Oliver, Sampo & Joel</p>
+          <p className="text-center text-gray-300">Tehty kukkaviikonlopun aikana ilman ulkopuolista rahoitusta</p>
+          <p className="text-center text-gray-300"><a href="https://kukka.digital" target="_blank" rel="noreferrer" className="underline">kukka.digital</a></p>
+        </div>
       </div>
     </div>
   );
