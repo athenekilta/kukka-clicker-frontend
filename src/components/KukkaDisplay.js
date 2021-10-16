@@ -3,8 +3,10 @@ import * as PIXI from "pixi.js";
 import GameQuote from "./GameQuote";
 import Score from "./Score";
 
+let mem = null;
+
 const KukkaDisplay = ({ score, user, clickKukka }) => {
-  useEffect(() => {
+  const createScene = () => {
     const scene = document.getElementById("kukka-scene");
     if (!scene) return;
 
@@ -28,8 +30,8 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
       const leaf = new PIXI.Sprite(textures[i % 3]);
       leaf.container = container;
       leaf.anchor.set(0.5);
-      container.pivot.x = Math.random() * app.screen.width / 2;
-      container.pivot.y = Math.random() * app.screen.height / 2;
+      container.pivot.x = Math.random() * app.screen.width / 1.6;
+      container.pivot.y = Math.random() * app.screen.height / 1.6;
       // leaf.x = Math.random() * app.screen.width;
       // leaf.y = Math.random() * app.screen.height;
       const scale = Math.max(Math.random() / 4, 0.1);
@@ -39,6 +41,7 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
       leaves.push(leaf);
       container.addChild(leaf);
       app.stage.addChild(container);
+      leaf.visible = false;
     }
 
     // create a new Sprite from an image path
@@ -50,24 +53,51 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
     // move the sprite to the center of the screen
     bunny.x = app.screen.width / 2;
     bunny.y = app.screen.height / 2;
-    bunny.scale.x = 0.5;
-    bunny.scale.y = 0.5;
 
     app.stage.addChild(bunny);
 
     // Listen for animate update
     app.ticker.add((delta) => {
-      leaves.forEach((leaf) => {
-        leaf.rotation += leaf.speed * 0.1 * delta;
-        leaf.container.rotation += leaf.container.speed * 0.01 * delta;
+      const score = app.score;
+      const x = Math.log(score) / 1000;
+      const visibleLeaves =  Math.min(x * 1000, 1000); // Math.floor(1000 * x);
+      leaves.forEach((leaf, i) => {
+        if (i + 1 < visibleLeaves) {
+          leaf.rotation += leaf.speed * 0.1 * delta;
+          leaf.container.rotation += leaf.container.speed * 0.01 * delta;
+          leaf.visible = true;
+        } else {
+          leaf.visible = false;
+        }
       });
+      const scale = Math.max(0.15, Math.min(x * 0.5, 0.5));
+      bunny.scale.x = scale;
+      bunny.scale.y = scale;
       bunny.rotation += 0.01 * delta;
     });
 
+    return app;
+  };
+
+  // hacky way to update score to pixi app
+  useEffect(() => {
+    const app = createScene();
+    if (app) {
+      mem = app;
+    }
     return () => {
-      app.destroy();
+      if (app) {
+        app.destroy();
+        mem = null;
+      }
     };
   }, []);
+
+  useEffect(()=> {
+    if (mem) {
+      mem.score = score;
+    }
+  }, [score]);
 
   return (
     <div className="w-full h-full relative">
