@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
-const UpgradeRewardProgress = ({ upgrade }) => {
+const UpgradeRewardProgress = ({ upgrade, upgradeDefinition }) => {
   useEffect(() => {
     let loop = true;
     const render = () => {
       if (loop) {
         const div = document.getElementById(upgrade.type);
         if (div) {
-          div.style.width = `${(((Date.now() - upgrade.previous_time) / upgrade.time_interval) * 100) % 100}%`;
+          div.style.width = `${(((Date.now() - upgrade.previous_time) / upgradeDefinition.time_interval) * 100) % 100}%`;
         }
       }
       requestAnimationFrame(() => {
@@ -18,7 +18,7 @@ const UpgradeRewardProgress = ({ upgrade }) => {
     return () => {
       loop = false;
     };
-  }, [upgrade]);
+  }, [upgrade, upgradeDefinition]);
 
   return (
     <div
