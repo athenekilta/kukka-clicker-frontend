@@ -181,7 +181,7 @@ const Game = ({ user }) => {
                       {usersUpgrade ? 
                         <>
                           <span> – tuotto </span>
-                          +<Score value={upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level + 1)- profit}/>
+                          +<Score value={(upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level + 1)) - profit}/>
                         </> : null}
                     </p>        
                   </li>

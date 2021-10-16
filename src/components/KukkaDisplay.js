@@ -136,7 +136,7 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
 
   return (
     <div className="w-full relative cursor-pointer">
-      <canvas id="kukka-scene" className="w-full" onClick={ clickKukka } />
+      <canvas id="kukka-scene" className="w-full" onPointerDown={ clickKukka } />
 
       <div className="absolute top-0 left-0 z-10 w-full h-full pointer-events-none">
         <div className="flex flex-col md:flex-row w-full justify-between md:items-center p-2 md:p-4">
