@@ -146,7 +146,7 @@ const Game = ({ user }) => {
 
                     <p>tuottaa
                       <b> <Score value={profit}/> </b>
-                      joka <b>{upgrade.time_interval / 1000}. sekunti</b>
+                      joka <b>{(upgrade.time_interval / 1000).toString().replace(".", ",")}. sekunti</b>
                       <em> (<Score value={profit/upgrade.time_interval*1000} />/sekunti)</em>
                     </p>               
                     <span className="text-xs italic">
