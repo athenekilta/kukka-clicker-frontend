@@ -76,9 +76,17 @@ const Game = ({ user }) => {
       return socketClient;
     };
     const socketClient = initGame();
+    const interval = setInterval(() => {
+      if (socketClient && socketClient.connected) {
+        socketClient.emit("heartbeat");
+      }
+    }, 2000);
     return () => {
       if (socketClient) {
         socketClient.disconnect();
+      }
+      if (interval) {
+        clearInterval(interval);
       }
     };
   }, [user]);
