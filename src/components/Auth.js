@@ -2,21 +2,21 @@ import React from "react";
 import AuthenticationForm from "./AuthenticationForm";
 import authService from "../services/authService";
 
-const Register = ({ setUserData }) => {
+const Register = ({ setUser }) => {
   const handleRegister = async (user, pass) => {
-    const result = await authService.login(
+    let result = await authService.login(
       user,
       pass,
     );
     if (result && result.status === 200)
-      setUserData(result.data.user);
+      setUser(result.data.user);
     else if (result && result.data.message === "no user with that username") {
-      const registerResult = await authService.register(
+      result = await authService.register(
         user,
         pass,
       );
-      if (registerResult && registerResult.status === 201)
-        setUserData(result.data.user);
+      if (result && result.status === 201)
+        setUser(result.data.user);
     } else if (result) {
       alert(result.data.message);
     }  

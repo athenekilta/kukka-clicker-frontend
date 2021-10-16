@@ -23,7 +23,7 @@ const App = () => {
       {
         user
           ? <Game user={user} />
-          : <Auth setUserData={setUser} />
+          : <Auth setUser={setUser} />
       }
       <p>{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
     </div>
