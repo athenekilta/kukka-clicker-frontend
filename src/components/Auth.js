@@ -24,10 +24,19 @@ const Register = ({ setUserData }) => {
 
   return (
     <>
-      <h2>Log in or register</h2>
+      <h2>Kirjaudu sisään tai rekisteröidy</h2>
+      <p>
+        Jos sinulla on jo tunnukset, syötä ne tähän.
+        Voit myös rekisteröityä syöttämällä tunnukset samaan kenttään.
+      </p>
       <AuthenticationForm
         handleCredentials={handleRegister}
       />
+      <a href="#" onClick={ () =>
+        alert("Mietipä vielä uudestaan! Jos et keksi, niin tee uusi tunnus.")
+      }>
+        Unohditko salasanasi?
+      </a>
     </>
   );
 };

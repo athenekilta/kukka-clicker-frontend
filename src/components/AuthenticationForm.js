@@ -19,7 +19,7 @@ const AuthenticationForm = ({ handleCredentials }) => {
 
   return (
     <form>
-      <label htmlFor="username">Username: </label>
+      <label htmlFor="username">Käyttäjätunnus: </label>
       <input
         id="username"
         name="username"
@@ -28,7 +28,7 @@ const AuthenticationForm = ({ handleCredentials }) => {
         onChange={ (event) => handleChange(event) }
       />
       <br />
-      <label htmlFor="password">Password: </label>
+      <label htmlFor="password">Salasana: </label>
       <input
         id="password"
         name="password"
@@ -36,7 +36,7 @@ const AuthenticationForm = ({ handleCredentials }) => {
         onChange={ (event) => handleChange(event) }
       />
       <br />
-      <input type="submit" value="Register" onClick={(event) => preSubmit(event)} />
+      <input type="submit" value="Pelaamaan!" onClick={(event) => preSubmit(event)} />
     </form>
   );
 };
