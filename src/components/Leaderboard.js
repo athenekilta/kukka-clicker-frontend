@@ -12,7 +12,7 @@ const Leaderboard = ({ leaderboard = [] })=> {
             <li
               key={user.username}
               className="p-2"
-            >{medal ? medal : i+1 + "."} <b>{user.username}</b>: <Score value={user.score} /></li>
+            >{medal ? medal : i+1 + "."} <b>{user.username}, taso {user.level}</b>: <Score value={user.score} /></li>
           );
         })}
       </ul>

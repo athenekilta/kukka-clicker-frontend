@@ -75,6 +75,12 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
     bunny.x = app.screen.width / 2;
     bunny.y = app.screen.height / 2;
 
+    bunny.interactive = true;
+    bunny.on("pointerdown", () => {
+      bunny.rotation -= 0.03;
+      bunny.clicktime = Date.now();
+    });
+
     app.stage.addChild(bunny);
 
     // Listen for animate update
@@ -100,7 +106,9 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
       const scale = Math.max(0.15, Math.min(x * 0.5, 0.5));
       bunny.scale.x = scale;
       bunny.scale.y = scale;
-      bunny.rotation += 0.01 * delta;
+      if (!bunny.clicktime || Date.now() - bunny.clicktime > 200) {
+        bunny.rotation += 0.01 * delta;
+      }
     });
 
     return app;
@@ -127,28 +135,22 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
   }, [score]);
 
   return (
-    <div className="w-full h-full relative">
-      <canvas id="kukka-scene" className="w-full"/>
+    <div className="w-full relative cursor-pointer">
+      <canvas id="kukka-scene" className="w-full" onClick={ clickKukka } />
 
-      <div className="absolute top-0 left-0 z-10 w-full h-full">
-        <div className="flex w-full justify-between items-center p-2 md:p-4">
-          <h1 className="text-xl font-bold">Kukan kasvatus peli</h1>
-          <p className="text-xl font-bold">{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
+      <div className="absolute top-0 left-0 z-10 w-full h-full pointer-events-none">
+        <div className="flex flex-col md:flex-row w-full justify-between md:items-center p-2 md:p-4">
+          <h1 className="md:text-xl font-bold">Kukan kasvatus peli</h1>
+          <p className="md:text-xl font-bold">{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
         </div>
 
-        <div 
-          style={{ left: "50%", top: "75%", transform: "translateX(-50%) translateY(-50%)"}}
-          className="absolute top-0 left-0 flex flex-col items-center bg-white p-4 bg-opacity-60 rounded-lg"
+        <div
+          className="absolute bottom-0 left-0 flex flex-col items-center bg-white p-4 bg-opacity-60 rounded-lg w-full"
         >
           <h1 className="font-extrabold">Kukkasi on</h1>
           <h1 className="font-extrabold text-2xl"><Score value={ score } /></h1>
           <h1 className="font-extrabold">pitkä</h1>
           <GameQuote score={score} />
-          <button 
-            onClick={ clickKukka }
-            className="bg-yellow-400 rounded-full p-4">
-            Rakasta kukkaasi
-          </button>
         </div>
       </div>
     </div>

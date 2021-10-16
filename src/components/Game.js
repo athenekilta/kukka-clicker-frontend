@@ -15,6 +15,21 @@ const Game = ({ user }) => {
   const [upgrades, setUpgrades] = useState(null);
   const [gameState, setGameState] = useState(null);
 
+  const avgGrowth = useMemo(() => {
+    if (!upgrades || !gameState?.upgrades) return 0;
+    return upgrades.reduce((l, upgrade) => {
+      const usersUpgrade = gameState.upgrades.find((up) => up.type === upgrade.type);
+      if (!usersUpgrade) return l;
+      const profit = upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level);
+      return profit / upgrade.time_interval + l;
+    }, 0) * 1000;
+  }, [upgrades, gameState]);
+
+  const userLevel = useMemo(() => {
+    if (!gameState?.upgrades) return 0;
+    return gameState.upgrades.reduce((l, r) => l + r.level, 0);
+  }, [gameState]);
+
   const score = useMemo(() => {
     return gameState?.score || 0;
   }, [gameState]);
@@ -92,7 +107,7 @@ const Game = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="md:grid grid-cols-2">
+    <div className="md:grid grid-cols-2 select-none">
       
       <div>  
         {gameState ?
@@ -105,10 +120,20 @@ const Game = ({ user }) => {
         {/* Upgrades listed here */}
         {upgrades ? 
           <>
+            {
+              user ? 
+                <div className="p-2">
+                  <h1 className="text-lg font-bold">Taso {userLevel}</h1>
+                  <p>klikkausvoima: <b><Score value={0.001 * Math.pow(1.15, userLevel)}/></b></p>
+                  <p>keskimääräinen kasvuvauhti: <b><Score value={avgGrowth}/> sekunnissa</b></p>
+                </div>
+                : null
+            }
             <div className="p-2">
               <h1 className="text-lg font-bold">Päivitykset</h1>
-              <p className="text-xs italic"> Päivitykset kasvattat kukkaa puolestasi. Osta tai paranna päivityksiä klikkaamalla niitä!</p>
+              <p className="text-xs italic"> Päivitykset kasvattavat kukkaa puolestasi. Päivitykset myös korottavat tasoasi, mikä nostaa klikkausvoimaa. Osta tai paranna päivityksiä klikkaamalla niitä!</p>
             </div>
+
             <ul>{upgrades
               .filter((upgrade) => {
                 const alkurString = "Alkuräjähdys 2.0";
@@ -141,20 +166,26 @@ const Game = ({ user }) => {
                     <div className="flex flex-col md:flex-row justify-between md:items-center">
                       <p className="font-bold text-lg">{upgrade.type}</p>
                       <p className="text-xs italic">{upgrade.description}</p>
-                      <span className="whitespace-nowrap font-bold">lvl {usersUpgrade?.level || 0}</span>
+                      <span className="whitespace-nowrap font-bold">taso {usersUpgrade?.level || 0}</span>
                     </div>
 
-                    <p>tuottaa
+                    <p>tuotto
                       <b> <Score value={profit}/> </b>
                       joka <b>{(upgrade.time_interval / 1000).toString().replace(".", ",")}. sekunti</b>
                       <em> (<Score value={profit/upgrade.time_interval*1000} />/sekunti)</em>
-                    </p>               
-                    <span className="text-xs italic">
+                    </p>
+                    
+                    <p className="text-xs italic">
                       {usersUpgrade
                         ? "päivityksen hinta"
                         : "hinta"
                       }: <Score value={cost} />
-                    </span>
+                      {usersUpgrade ? 
+                        <>
+                          <span> – tuotto </span>
+                          +<Score value={upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level + 1)- profit}/>
+                        </> : null}
+                    </p>        
                   </li>
                 );
               })}
