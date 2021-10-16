@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import GameQuote from "./GameQuote";
 import Leaderboard from "./Leaderboard";
+import Score from "./Score";
 import { getToken } from "../services/authService";
 import UpgradeRewardProgress from "./UpgradeRewardProgress";
 
@@ -89,7 +90,7 @@ const Game = ({ user }) => {
         <div className="flex flex-col py-12 px-8 items-center">  
           <h1>Kukan kasvatus peli</h1>
           <p>{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
-          <h1>Kukkasi on: { gameState.score != null ? gameState.score : "Loading..." } metriä pitkä</h1>
+          <h1>Kukkasi on <Score value={ score } /> pitkä</h1>
           <GameQuote score={score} />
           <button onClick={ clickKukka }
             className="bg-green-700 p-4 rounded-md">Rakasta kukkaasi</button>
