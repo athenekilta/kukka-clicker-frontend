@@ -16,6 +16,31 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
     // and the root stage PIXI.Container.
     const app = new PIXI.Application({ view: scene, width: WIDTH, height: WIDTH, backgroundColor: 0xFFFFFF, resolution: window.devicePixelRatio || 1,});
 
+    const textures = ["/assets/lehti1.png", "/assets/lehti2.png", "/assets/lehti3.png"].map((url) => PIXI.Texture.from(url));
+    // leaves
+    const leaves = [];
+    const AMOUNT = 100;
+    for (let i = 0; i < AMOUNT; ++i) {
+      const container = new PIXI.Container();
+      container.x = app.screen.width / 2;
+      container.y = app.screen.height / 2;
+      container.speed = Math.random() * 2 - 1;
+      const leaf = new PIXI.Sprite(textures[i % 3]);
+      leaf.container = container;
+      leaf.anchor.set(0.5);
+      container.pivot.x = Math.random() * app.screen.width / 2;
+      container.pivot.y = Math.random() * app.screen.height / 2;
+      // leaf.x = Math.random() * app.screen.width;
+      // leaf.y = Math.random() * app.screen.height;
+      const scale = Math.max(Math.random() / 4, 0.1);
+      leaf.scale.x = scale;
+      leaf.scale.y = scale;
+      leaf.speed = Math.random() * 2 - 1;
+      leaves.push(leaf);
+      container.addChild(leaf);
+      app.stage.addChild(container);
+    }
+
     // create a new Sprite from an image path
     const bunny = PIXI.Sprite.from("/assets/kukka.png");
 
@@ -32,9 +57,10 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
 
     // Listen for animate update
     app.ticker.add((delta) => {
-    // just for fun, let's rotate mr rabbit a little
-    // delta is 1 if running at 100% performance
-    // creates frame-independent transformation
+      leaves.forEach((leaf) => {
+        leaf.rotation += leaf.speed * 0.1 * delta;
+        leaf.container.rotation += leaf.container.speed * 0.01 * delta;
+      });
       bunny.rotation += 0.01 * delta;
     });
 
