@@ -58,7 +58,7 @@ const Game = ({ user }) => {
             },
           },
         },
-        reconnection: false,
+        // reconnection: false,
       });
 
       // listeners
