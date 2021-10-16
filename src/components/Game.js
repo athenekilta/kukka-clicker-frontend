@@ -92,6 +92,7 @@ const Game = () => {
               >
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>
+                  <p className="text-xs italic">{upgrade.description}</p>
                   <span>lvl 0</span>
                 </div>
                 
