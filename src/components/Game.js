@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
-import GameQuote from "./GameQuote";
 import Leaderboard from "./Leaderboard";
-import Score from "./Score";
 import { getToken } from "../services/authService";
 import UpgradeRewardProgress from "./UpgradeRewardProgress";
+import KukkaDisplay from "./KukkaDisplay";
+import Score from "./Score";
 
 /**
  * The main game component
@@ -94,16 +94,11 @@ const Game = ({ user }) => {
   return (
     <div className="md:grid grid-cols-2">
       
-      {gameState ? 
-        <div className="flex flex-col py-12 px-8 items-center">  
-          <h1>Kukan kasvatus peli</h1>
-          <p>{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
-          <h1>Kukkasi on <Score value={ score } /> pitkä</h1>
-          <GameQuote score={score} />
-          <button onClick={ clickKukka }
-            className="bg-green-700 p-4 rounded-md">Rakasta kukkaasi</button>
-        </div>
-        : null}
+      <div>  
+        {gameState ?
+          <KukkaDisplay score={score} user={user} clickKukka={clickKukka} />
+          : null}
+      </div>
 
       <div className="md:h-screen overflow-y-auto">
         <Leaderboard leaderboard={leaderboard} />
