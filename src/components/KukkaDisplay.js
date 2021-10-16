@@ -34,7 +34,7 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
       container.pivot.y = Math.random() * app.screen.height / 1.6;
       // leaf.x = Math.random() * app.screen.width;
       // leaf.y = Math.random() * app.screen.height;
-      const scale = Math.max(Math.random() / 4, 0.1);
+      const scale = Math.max(Math.random() / 2.5, 0.25);
       leaf.scale.x = scale;
       leaf.scale.y = scale;
       leaf.speed = Math.random() * 2 - 1;
