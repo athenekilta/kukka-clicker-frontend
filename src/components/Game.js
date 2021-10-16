@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import GameQuote from "./GameQuote";
 import Leaderboard from "./Leaderboard";
 import { getToken } from "../services/authService";
+import UpgradeRewardProgress from "./UpgradeRewardProgress";
 
 /**
  * The main game component
@@ -112,7 +113,7 @@ const Game = ({ user }) => {
                 className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-gray-400 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
                 onClick={isClickable ? onClick : undefined}
               >
-                <div style={usersUpgrade ? { width: `${((Date.now() - usersUpgrade.previous_time) / usersUpgrade.time_interval) * 100}%`, zIndex: -1 }: undefined} className="absolute top-0 left-0 h-full bg-yellow-200"></div>
+                {usersUpgrade ?  <UpgradeRewardProgress upgrade={usersUpgrade} /> : null}
 
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>
