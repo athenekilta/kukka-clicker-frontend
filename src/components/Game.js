@@ -104,40 +104,45 @@ const Game = ({ user }) => {
         <Leaderboard leaderboard={leaderboard} />
         {/* Upgrades listed here */}
         {upgrades ? 
+          <>
+            <div className="p-2">
+              <h1 className="text-lg font-bold">Päivitykset</h1>
+              <p className="text-xs italic"> Päivitykset kasvattat kukkaa puolestasi. Osta tai paranna päivityksiä klikkaamalla niitä!</p>
+            </div>
+            <ul>{upgrades.map((upgrade) => {
+              const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
+              const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level) : upgrade.score;
+              const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
+              const isClickable = score >= cost;
+              const onClick = () => clickUpgrade(upgrade.type);
 
-          <ul>{upgrades.map((upgrade) => {
-            const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
-            const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level) : upgrade.score;
-            const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
-            const isClickable = score >= cost;
-            const onClick = () => clickUpgrade(upgrade.type);
+              return (
+                <li
+                  key={upgrade.type}
+                  className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-blue-200 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
+                  onClick={isClickable ? onClick : undefined}
+                >
+                  <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
 
-            return (
-              <li
-                key={upgrade.type}
-                className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-blue-200 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
-                onClick={isClickable ? onClick : undefined}
-              >
-                <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
+                  <div className="flex flex-col md:flex-row justify-between items-center">
+                    <p className="font-bold text-lg">{upgrade.type}</p>
+                    <p className="text-xs italic">{upgrade.description}</p>
+                    <span className="whitespace-nowrap font-bold">lvl {usersUpgrade?.level || 0}</span>
+                  </div>
 
-                <div className="flex flex-col md:flex-row justify-between">
-                  <p className="font-bold text-lg">{upgrade.type}</p>
-                  <p className="text-xs italic">{upgrade.description}</p>
-                  <span className="whitespace-nowrap font-bold">lvl {usersUpgrade?.level || 0}</span>
-                </div>
-
-                <p>tuottaa <b><Score value={profit}/></b> joka <b>{upgrade.time_interval / 1000} sekunti</b></p>
+                  <p>tuottaa <b><Score value={profit}/></b> joka <b>{upgrade.time_interval / 1000} sekunti</b></p>
                 
-                <span className="text-sm">
-                  {usersUpgrade
-                    ? "päivityksen hinta"
-                    : "hinta"
-                  }: <Score value={cost} />
-                </span>
-              </li>
-            );
-          })}
-          </ul>
+                  <span className="text-xs italic">
+                    {usersUpgrade
+                      ? "päivityksen hinta"
+                      : "hinta"
+                    }: <Score value={cost} />
+                  </span>
+                </li>
+              );
+            })}
+            </ul>
+          </>
           : null}
       </div>
     </div>
