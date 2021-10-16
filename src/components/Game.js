@@ -138,7 +138,7 @@ const Game = ({ user }) => {
                   >
                     <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
 
-                    <div className="flex flex-col md:flex-row justify-between items-center">
+                    <div className="flex flex-col md:flex-row justify-between md:items-center">
                       <p className="font-bold text-lg">{upgrade.type}</p>
                       <p className="text-xs italic">{upgrade.description}</p>
                       <span className="whitespace-nowrap font-bold">lvl {usersUpgrade?.level || 0}</span>

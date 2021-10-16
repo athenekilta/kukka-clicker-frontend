@@ -21,7 +21,7 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
     const textures = ["/assets/lehti1.png", "/assets/lehti2.png", "/assets/lehti3.png"].map((url) => PIXI.Texture.from(url));
     // leaves
     const leaves = [];
-    const AMOUNT = 100;
+    const AMOUNT = 500;
     for (let i = 0; i < AMOUNT; ++i) {
       const container = new PIXI.Container();
       container.x = app.screen.width / 2;
@@ -30,8 +30,8 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
       const leaf = new PIXI.Sprite(textures[i % 3]);
       leaf.container = container;
       leaf.anchor.set(0.5);
-      container.pivot.x = Math.random() * app.screen.width / 1.6;
-      container.pivot.y = Math.random() * app.screen.height / 1.6;
+      container.pivot.x = Math.random() * app.screen.width / 3;
+      container.pivot.y = Math.random() * app.screen.height / 3;
       // leaf.x = Math.random() * app.screen.width;
       // leaf.y = Math.random() * app.screen.height;
       const scale = Math.max(Math.random() / 2.5, 0.25);
@@ -60,7 +60,7 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
     app.ticker.add((delta) => {
       const score = app.score;
       const x = Math.log(score) / 1000;
-      const visibleLeaves =  Math.min(x * 1000, 1000); // Math.floor(1000 * x);
+      const visibleLeaves =  Math.min(x * 1000, AMOUNT); // Math.floor(1000 * x);
       leaves.forEach((leaf, i) => {
         if (i + 1 < visibleLeaves) {
           leaf.rotation += leaf.speed * 0.1 * delta;
@@ -110,7 +110,7 @@ const KukkaDisplay = ({ score, user, clickKukka }) => {
         </div>
 
         <div 
-          style={{ left: "50%", top: "50%", transform: "translateX(-50%) translateY(-50%)"}}
+          style={{ left: "50%", top: "75%", transform: "translateX(-50%) translateY(-50%)"}}
           className="absolute top-0 left-0 flex flex-col items-center bg-white p-4 bg-opacity-60 rounded-lg"
         >
           <h1 className="font-extrabold">Kukkasi on</h1>
