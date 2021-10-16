@@ -107,6 +107,7 @@ const Game = ({ user }) => {
 
           <ul>{upgrades.map((upgrade) => {
             const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
+            const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level) : upgrade.score;
             const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
             const isClickable = score >= cost;
             const onClick = () => clickUpgrade(upgrade.type);
@@ -120,12 +121,14 @@ const Game = ({ user }) => {
                 <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
 
                 <div className="flex flex-col md:flex-row justify-between">
-                  <p>{upgrade.type}</p>
+                  <p className="font-bold text-lg">{upgrade.type}</p>
                   <p className="text-xs italic">{upgrade.description}</p>
-                  <span className="whitespace-nowrap">lvl {usersUpgrade?.level || 0}</span>
+                  <span className="whitespace-nowrap font-bold">lvl {usersUpgrade?.level || 0}</span>
                 </div>
+
+                <p>tuottaa <b><Score value={profit}/></b> joka <b>{upgrade.time_interval / 1000} sekunti</b></p>
                 
-                <span>
+                <span className="text-sm">
                   {usersUpgrade
                     ? "päivityksen hinta"
                     : "hinta"
