@@ -25,7 +25,7 @@ const App = () => {
           ? <Game userData={userData} />
           : <Auth setUserData={setUserData} />
       }
-      <p>{ userData ? `Logged in as ${userData.username}` : "Not logged in" }</p>
+      <p>{ userData ? `Kirjautunut pelaaja: ${userData.username}` : "" }</p>
     </div>
   );
 };
