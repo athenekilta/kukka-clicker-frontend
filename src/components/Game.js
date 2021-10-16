@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import Leaderboard from "./Leaderboard";
-import { getToken } from "../services/authService";
+import { baseUrl, getToken } from "../services/authService";
 import UpgradeRewardProgress from "./UpgradeRewardProgress";
 import KukkaDisplay from "./KukkaDisplay";
 import Score from "./Score";
@@ -34,8 +34,6 @@ const Game = ({ user }) => {
     return gameState?.score || 0;
   }, [gameState]);
 
-  const SERVER_URL  = "http://localhost:4000";
-
   const clickKukka = () => {
     if (!client) return; 
     client.emit("click");
@@ -51,7 +49,7 @@ const Game = ({ user }) => {
     const getUpgrades = async () => {
       try {
       // init
-        const data = await fetch(`${SERVER_URL}/api/upgrades`).then((data) => data.json());  
+        const data = await fetch(`${baseUrl}/api/upgrades`).then((data) => data.json());  
         // set
         setUpgrades(data);
       } catch (error) {
@@ -67,7 +65,7 @@ const Game = ({ user }) => {
       if (!user) return;
       // init
       const token = getToken();
-      const socketClient = io(SERVER_URL, { 
+      const socketClient = io(baseUrl, { 
         transportOptions: {
           polling: {
             extraHeaders: {

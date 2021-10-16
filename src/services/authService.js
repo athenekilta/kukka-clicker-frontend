@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:4000";
+export const baseUrl = "http://localhost:4000";
 const TOKEN_NAME = "kukka_coin_";
 
 export const getToken = ()  => {
