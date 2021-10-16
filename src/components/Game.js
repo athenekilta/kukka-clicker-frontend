@@ -130,8 +130,11 @@ const Game = ({ user }) => {
                     <span className="whitespace-nowrap font-bold">lvl {usersUpgrade?.level || 0}</span>
                   </div>
 
-                  <p>tuottaa <b><Score value={profit}/></b> joka <b>{upgrade.time_interval / 1000} sekunti</b></p>
-                
+                  <p>tuottaa
+                    <b> <Score value={profit}/> </b>
+                    joka <b>{upgrade.time_interval / 1000}. sekunti</b>
+                    <em> (<Score value={profit/upgrade.time_interval*1000} />/sekunti)</em>
+                  </p>               
                   <span className="text-xs italic">
                     {usersUpgrade
                       ? "päivityksen hinta"

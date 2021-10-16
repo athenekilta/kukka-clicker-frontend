@@ -16,7 +16,7 @@ const Score = ({ value }) => {
       24: "jotta",
     };
     if (value < 0.01) {
-      v = (value * 1000).toFixed(0);
+      v = (value * 1000).toFixed(1);
       u = "milli";
     } else if (value < 1) {
       v = (value * 100).toFixed(1);
