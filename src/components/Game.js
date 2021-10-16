@@ -2,11 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import GameQuote from "./GameQuote";
 import Leaderboard from "./Leaderboard";
+import { getToken } from "../services/authService";
 
 /**
  * The main game component
  */
-const Game = () => {
+const Game = ({ user }) => {
   const [client, setClient] = useState(null);
   const [leaderboard, setLeaderboard] = useState(null);
   const [upgrades, setUpgrades] = useState(null);
@@ -25,7 +26,7 @@ const Game = () => {
 
   const clickUpgrade = (type) => {
     if (!client) return; 
-    client.emit(type);
+    client.emit("upgrade", { type });
   };
 
   // init upgrades
@@ -46,8 +47,19 @@ const Game = () => {
   // init game
   useEffect(() => {
     const initGame = () => {
+      if (!user) return;
       // init
-      const socketClient = io(SERVER_URL, { withCredentials: true });
+      const token = getToken();
+      const socketClient = io(SERVER_URL, { 
+        transportOptions: {
+          polling: {
+            extraHeaders: {
+              ...(token ? {Authorization: `Bearer ${token}`} : {})
+            },
+          },
+        },
+        reconnection: false,
+      });
 
       // listeners
       socketClient.on("set_state", (state) => {
@@ -61,7 +73,7 @@ const Game = () => {
       setClient(socketClient);
     };
     initGame();
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -84,11 +96,12 @@ const Game = () => {
             const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
             const cost = usersUpgrade ? usersUpgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
             const isClickable = score >= cost;
+            const onClick = () => clickUpgrade(upgrade.type);
             return (
               <li
                 key={upgrade.type}
                 className={`p-2 md:p-4 ${isClickable ? "hover:bg-gray-400 cursor-pointer" : "opacity-50"}`}
-                onClick={isClickable ? () => clickUpgrade(upgrade.type) : undefined}
+                onClick={isClickable ? onClick : undefined}
               >
                 <div className="flex justify-between">
                   <p>{upgrade.type}</p>

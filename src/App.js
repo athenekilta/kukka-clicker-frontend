@@ -5,13 +5,13 @@ import authService from "./services/authService";
 import "./App.scss";
 
 const App = () => {
-  const [userData, setUserData] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser =  async() => {
       const res = await authService.validate();
       if (res.data?.user?.username) {
-        setUserData(res.data.user);
+        setUser(res.data.user);
       }
     };
     fetchUser();
@@ -21,11 +21,11 @@ const App = () => {
     <div>
       <h1>Kukkaclicker</h1>
       {
-        userData
-          ? <Game userData={userData} />
-          : <Auth setUserData={setUserData} />
+        user
+          ? <Game user={user} />
+          : <Auth setUserData={setUser} />
       }
-      <p>{ userData ? `Kirjautunut pelaaja: ${userData.username}` : "" }</p>
+      <p>{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
     </div>
   );
 };
