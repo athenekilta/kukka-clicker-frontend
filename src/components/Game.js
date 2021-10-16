@@ -71,8 +71,14 @@ const Game = ({ user }) => {
 
       // set
       setClient(socketClient);
+      return socketClient;
     };
-    initGame();
+    const socketClient = initGame();
+    return () => {
+      if (socketClient) {
+        socketClient.emit("disconnect");
+      }
+    };
   }, [user]);
 
   return (
