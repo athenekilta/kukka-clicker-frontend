@@ -5,7 +5,8 @@ const QUOTES = [
   {value: 100, options: ["kukka alkaa kasvamaan"] },
   {value: 200, options: ["onpa iso kukka"] },
   {value: 420, options: ["blazing"] },
-];
+  {value: 1000000000, options: ["ai saaataaaanaaaaa"] },
+].sort((l, r) => r.value - l.value);
 
 const GameQuote = ({ score = 0 }) => {
   const quote = useMemo(() => {
