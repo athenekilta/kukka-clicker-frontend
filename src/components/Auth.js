@@ -19,7 +19,9 @@ const Register = ({ setUser }) => {
         setUser(result.data.user);
     } else if (result) {
       alert(result.data.message);
-    }  
+    } else {
+      alert("No result from server, please contact administrators");
+    }
   };
 
   return (
