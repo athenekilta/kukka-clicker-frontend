@@ -124,13 +124,13 @@ const Game = ({ user }) => {
               >
                 <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
 
-                <div className="flex justify-between">
+                <div className="flex flex-col md:flex-row justify-between">
                   <p>{upgrade.type}</p>
                   <p className="text-xs italic">{upgrade.description}</p>
-                  <span>lvl {usersUpgrade?.level || 0}</span>
+                  <span className="whitespace-nowrap">lvl {usersUpgrade?.level || 0}</span>
                 </div>
                 
-                <span>hinta: {cost} metriä</span>
+                <span>{usersUpgrade ? "päivityksen hinta" : "hinta"}: {cost} metriä</span>
               </li>
             );
           })}
