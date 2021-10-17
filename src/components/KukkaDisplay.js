@@ -18,6 +18,7 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     // and the root stage PIXI.Container.
     const app = new PIXI.Application({ view: scene, width: WIDTH, height: WIDTH, backgroundColor: 0xFFFFFF, resolution: window.devicePixelRatio || 1,});
     app.score = score;
+    app.userLevel = userLevel;
 
     const textures = ["/assets/lehti1.png", "/assets/lehti2.png", "/assets/lehti3.png"].map((url) => PIXI.Texture.from(url));
     // leaves
@@ -48,8 +49,7 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     // leaves
     const arrows = [];
     const arrowTexture = PIXI.Texture.from("/assets/arrow.png");
-    const ARROW_AMOUNT = userLevel;
-    for (let i = 0; i < ARROW_AMOUNT; ++i) {
+    const createArrow = () => {
       const arrow = new PIXI.Sprite(arrowTexture);
       arrow.anchor.set(0.5);
       arrow.x = Math.random() * app.screen.width;
@@ -64,6 +64,11 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
       arrow.speed = scale * 5;
       arrows.push(arrow);
       app.stage.addChild(arrow);
+    };
+
+    const ARROW_AMOUNT = app.userLevel;
+    for (let i = 0; i < ARROW_AMOUNT; ++i) {
+      createArrow();
     }
 
     // create a new Sprite from an image path
@@ -88,6 +93,8 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     app.ticker.add((delta) => {
       const score = app.score;
       const x = Math.log(score) / 1000;
+
+      // leaves
       const visibleLeaves = Math.min(x * 1000, MAX_AMOUNT); // Math.floor(1000 * x);
       leaves.forEach((leaf, i) => {
         if (i + 1 < visibleLeaves) {
@@ -98,12 +105,24 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
           leaf.visible = false;
         }
       });
+
+      // create arrows if too little
+      if (arrows.length < app.userLevel) {
+        const amount = app.userLevel - arrows.length;
+        for (let i = 0; i < amount; ++i) {
+          createArrow();
+        }
+      }
+
+      // awwors
       arrows.forEach((arrow) => {
         arrow.y -= arrow.speed * 0.1 * delta;
         if (arrow.y < -50) {
           arrow.y = app.screen.height + 50;
         }
       });
+
+      // bunny aka flower
       const scale = Math.max(0.15, Math.min(x * 0.5, 0.5));
       bunny.scale.x = scale;
       bunny.scale.y = scale;
@@ -128,6 +147,12 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
       }
     };
   }, []);
+
+  useEffect(()=> {
+    if (pixiApp) {
+      pixiApp.userLevel = userLevel;
+    }
+  }, [userLevel]);
 
   useEffect(()=> {
     if (pixiApp) {
