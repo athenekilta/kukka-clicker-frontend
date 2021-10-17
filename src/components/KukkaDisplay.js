@@ -88,7 +88,7 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     app.ticker.add((delta) => {
       const score = app.score;
       const x = Math.log(score) / 1000;
-      const visibleLeaves =  MAX_AMOUNT; //Math.min(x * 1000, MAX_AMOUNT); // Math.floor(1000 * x);
+      const visibleLeaves = Math.min(x * 1000, MAX_AMOUNT); // Math.floor(1000 * x);
       leaves.forEach((leaf, i) => {
         if (i + 1 < visibleLeaves) {
           leaf.rotation += leaf.speed * 0.1 * delta;
