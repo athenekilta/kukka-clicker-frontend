@@ -134,6 +134,13 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
     }
   }, [score]);
 
+  const logout = () => {
+    if (window.confirm("Haluatko kirjautua ulos?")) {
+      window.localStorage.clear();
+      window.location.reload(true);
+    }
+  };
+
   return (
     <div className="w-full relative cursor-pointer">
       <canvas id="kukka-scene" className="w-full" onPointerDown={ clickKukka } />
@@ -141,7 +148,10 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
       <div className="absolute top-0 left-0 z-10 w-full h-full pointer-events-none">
         <div className="flex flex-col md:flex-row w-full justify-between md:items-center p-2 md:p-4">
           <h1 className="md:text-xl font-bold">Kukan kasvatus peli</h1>
-          <p className="md:text-xl font-bold">{ user ? `Kirjautunut pelaaja: ${user.username}` : null }</p>
+          <p className="md:text-xl font-bold">
+            { user ? `Kirjautunut pelaaja: ${user.username}` : null }
+            <a className="pointer-events-auto" href="#" onClick={() => logout()}> (kirjaudu ulos)</a>
+          </p>
         </div>
 
         <div
