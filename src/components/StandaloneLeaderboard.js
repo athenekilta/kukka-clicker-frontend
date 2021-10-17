@@ -24,7 +24,7 @@ const StandloneLeaderboard = () => {
   }, []);
   return (
     <div className="w-full max-w-md my-2 md:p-2">
-      <Leaderboard leaderboard={leaderboard} />
+      {leaderboard ? <Leaderboard leaderboard={leaderboard} /> : null}
     </div>
   );
 };
