@@ -9,17 +9,10 @@ const StandloneLeaderboard = () => {
   // init game
   useEffect(() => {
     const initGame = () => {
-      // init
-      const socketClient = io(baseUrl, { 
-        // reconnection: false,
-      });
-
-      // listeners
+      const socketClient = io(baseUrl);
       socketClient.on("leaderboard", (users) => {
         setLeaderboard(users);
       });
-
-      // set
       return socketClient;
     };
     const socketClient = initGame();
