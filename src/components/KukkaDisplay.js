@@ -155,7 +155,8 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
         </div>
 
         <div
-          className="absolute bottom-0 left-0 flex flex-col items-center bg-white p-4 bg-opacity-60 rounded-lg w-full"
+          style={{ background: "linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)" }}
+          className="absolute bottom-0 left-0 flex flex-col items-center p-4 w-full"
         >
           <h1 className="font-extrabold">Kukkasi on</h1>
           <h1 className="font-extrabold text-2xl"><Score value={ score } /></h1>
