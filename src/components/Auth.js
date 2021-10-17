@@ -1,6 +1,7 @@
 import React from "react";
 import AuthenticationForm from "./AuthenticationForm";
 import authService from "../services/authService";
+import StandloneLeaderboard from "./StandaloneLeaderboard";
 
 const Register = ({ setUser }) => {
   const handleRegister = async (user, pass) => {
@@ -25,21 +26,28 @@ const Register = ({ setUser }) => {
   };
 
   return (
-    <>
-      <h2>Kirjaudu sisään tai rekisteröidy</h2>
-      <p>
+    <main className="flex flex-col items-center w-full">
+      <div className="max-w-md my-8 p-2 md:p-4 w-full">
+        <h1 className="font-bold text-2xl">Kirjaudu sisään tai rekisteröidy</h1>
+        <p className="">
         Jos sinulla on jo tunnukset, syötä ne tähän.
         Voit myös rekisteröityä syöttämällä tunnukset samaan kenttään.
-      </p>
-      <AuthenticationForm
-        handleCredentials={handleRegister}
-      />
-      <a href="#" onClick={ () =>
-        alert("Mietipä vielä uudestaan! Jos et keksi, niin tee uusi tunnus.")
-      }>
-        Unohditko salasanasi?
-      </a>
-    </>
+        </p>
+        <AuthenticationForm
+          handleCredentials={handleRegister}
+        />
+        <a
+          className="text-sm text-gray-400 underline"
+          href="#" 
+          onClick={ () =>
+            alert("Mietipä vielä uudestaan! Jos et keksi, niin tee uusi tunnus.")
+          }>
+          Unohditko salasanasi?
+        </a>
+      </div>
+
+      <StandloneLeaderboard />
+    </main>
   );
 };
 

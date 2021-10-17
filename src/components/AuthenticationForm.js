@@ -18,25 +18,33 @@ const AuthenticationForm = ({ handleCredentials }) => {
   };
 
   return (
-    <form className="grid grid-cols-2 gap-y-1 max-w-md">
-      <label htmlFor="username">Käyttäjätunnus: </label>
+    <form className="">
+      <div className="grid grid-cols-2 gap-y-1 max-w-md my-4 items-center">
+        <label htmlFor="username">Käyttäjätunnus: </label>
+        <input
+          className="border border-gray-400 px-4 py-2 rounded-lg"
+          id="username"
+          name="username"
+          type="text"
+          placeholder="niemenkake"
+          onChange={ (event) => handleChange(event) }
+        />
+        <label htmlFor="password">Salasana: </label>
+        <input
+          className="border border-gray-400 px-4 py-2 rounded-lg"
+          id="password"
+          name="password"
+          type="password"
+          onChange={ (event) => handleChange(event) }
+        />
+      </div>
+
       <input
-        className="border border-gray-400"
-        id="username"
-        name="username"
-        type="text"
-        placeholder="niemenkake"
-        onChange={ (event) => handleChange(event) }
+        type="submit" 
+        value="Pelaamaan!" 
+        className="w-full p-4 rounded-lg cursor-pointer" 
+        onClick={(event) => preSubmit(event)} 
       />
-      <label htmlFor="password">Salasana: </label>
-      <input
-        className="border border-gray-400"
-        id="password"
-        name="password"
-        type="password"
-        onChange={ (event) => handleChange(event) }
-      />
-      <input type="submit" value="Pelaamaan!" onClick={(event) => preSubmit(event)} />
     </form>
   );
 };
