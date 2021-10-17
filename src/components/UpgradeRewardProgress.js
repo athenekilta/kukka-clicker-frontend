@@ -9,14 +9,9 @@ const UpgradeRewardProgress = ({ score, cost, upgrade, upgradeDefinition }) => {
         // time for reward
         const div = document.getElementById(upgrade.type);
         if (div) {
-          div.style.width = `${(((Date.now() - upgrade.previous_time) / upgradeDefinition.time_interval) * 100) % 100}%`;
+          div.style.width = `${((((Date.now() - upgrade.previous_time) / upgradeDefinition.time_interval) * 100) % 100) * 1.05}%`;
         }
       }
-      // progress in when to buy
-      // const div2 = document.getElementById(upgradeDefinition.type + "__");
-      // if (div2) {
-      //   div2.style.width = `${Math.min(score / cost * 100, 100)}%`;
-      // }
       requestAnimationFrame(() => {
         render();
       });
@@ -28,16 +23,18 @@ const UpgradeRewardProgress = ({ score, cost, upgrade, upgradeDefinition }) => {
     };
   }, [upgrade, upgradeDefinition]);
 
+  const costWidth = Math.min(score / cost * 100, 100);
+
   return (
     <div      
       style={{ zIndex: -1 }} 
       className="absolute top-0 left-0 h-full w-full">
       <div
         id={`${upgradeDefinition.type}__`}
-        style={{ width: `${Math.min(score / cost * 100, 100)}%` }}
-        className="absolute top-0 left-0 h-full bg-green-200"
+        style={{ width: `${costWidth}%` }}
+        className={`absolute top-0 left-0 h-full ${upgrade?.level ? "bg-green-200" : "bg-gray-200"}`}
       />
-      <div id={upgradeDefinition.type} className="absolute bottom-0 left-0 h-1 bg-blue-600" />
+      <div id={upgradeDefinition.type} className="absolute bottom-0 left-0 h-px bg-blue-600" />
     </div>
 
   );
