@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as PIXI from "pixi.js";
 import GameQuote from "./GameQuote";
 import Score from "./Score";
 
-let mem = null;
-
 const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
+  const [pixiApp, setPixiApp] = useState(null);
+
   const createScene = () => {
     const scene = document.getElementById("kukka-scene");
     if (!scene) return;
@@ -17,12 +17,13 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     // with a fallback to a canvas render. It will also setup the ticker
     // and the root stage PIXI.Container.
     const app = new PIXI.Application({ view: scene, width: WIDTH, height: WIDTH, backgroundColor: 0xFFFFFF, resolution: window.devicePixelRatio || 1,});
+    app.score = score;
 
     const textures = ["/assets/lehti1.png", "/assets/lehti2.png", "/assets/lehti3.png"].map((url) => PIXI.Texture.from(url));
     // leaves
     const leaves = [];
-    const AMOUNT = 500;
-    for (let i = 0; i < AMOUNT; ++i) {
+    const MAX_AMOUNT = 500;
+    for (let i = 0; i < MAX_AMOUNT; ++i) {
       const container = new PIXI.Container();
       container.x = app.screen.width / 2;
       container.y = app.screen.height / 2;
@@ -30,11 +31,11 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
       const leaf = new PIXI.Sprite(textures[i % 3]);
       leaf.container = container;
       leaf.anchor.set(0.5);
-      container.pivot.x = Math.random() * app.screen.width / 3;
-      container.pivot.y = Math.random() * app.screen.height / 3;
+      container.pivot.x = (Math.random() * 2 - 1) * app.screen.width / 2;
+      container.pivot.y = (Math.random() * 2 - 1) * app.screen.height / 2;
       // leaf.x = Math.random() * app.screen.width;
       // leaf.y = Math.random() * app.screen.height;
-      const scale = Math.max(Math.random() / 2.5, 0.25);
+      const scale = Math.max(Math.random(), 0.25);
       leaf.scale.x = scale;
       leaf.scale.y = scale;
       leaf.speed = Math.random() * 2 - 1;
@@ -56,7 +57,7 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
       // leaf.x = Math.random() * app.screen.width;
       // leaf.y = Math.random() * app.screen.height;
       arrow.rotation = Math.PI / 2;
-      const scale = Math.max(Math.random(), 0.3);
+      const scale = Math.max(Math.random() * 0.75, 0.3);
       arrow.scale.x = scale;
       arrow.scale.y = scale;
       arrow.zIndex = Math.floor(scale * 1000);
@@ -87,7 +88,7 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     app.ticker.add((delta) => {
       const score = app.score;
       const x = Math.log(score) / 1000;
-      const visibleLeaves =  Math.min(x * 1000, AMOUNT); // Math.floor(1000 * x);
+      const visibleLeaves =  MAX_AMOUNT; //Math.min(x * 1000, MAX_AMOUNT); // Math.floor(1000 * x);
       leaves.forEach((leaf, i) => {
         if (i + 1 < visibleLeaves) {
           leaf.rotation += leaf.speed * 0.1 * delta;
@@ -118,19 +119,19 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
   useEffect(() => {
     const app = createScene();
     if (app) {
-      mem = app;
+      setPixiApp(app);
     }
     return () => {
       if (app) {
         app.destroy();
-        mem = null;
+        setPixiApp(null);
       }
     };
-  }, [userLevel]);
+  }, []);
 
   useEffect(()=> {
-    if (mem) {
-      mem.score = score;
+    if (pixiApp) {
+      pixiApp.score = score;
     }
   }, [score]);
 
@@ -147,10 +148,10 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
 
       <div className="absolute top-0 left-0 z-10 w-full h-full pointer-events-none">
         <div className="flex flex-col md:flex-row w-full justify-between md:items-center p-2 md:p-4">
-          <h1 className="md:text-xl font-bold">Kukan kasvatus peli</h1>
-          <p className="md:text-xl font-bold">
+          <h1 className="md:text-lg font-bold">Kukan kasvatus peli</h1>
+          <p className="md:text-lg font-bold">
             { user ? `Kirjautunut pelaaja: ${user.username}` : null }
-            <a className="pointer-events-auto" href="#" onClick={() => logout()}> (kirjaudu ulos)</a>
+            <a className="pointer-events-auto text-sm" href="#" onClick={() => logout()}> (kirjaudu ulos)</a>
           </p>
         </div>
 
