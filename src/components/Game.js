@@ -14,6 +14,7 @@ const Game = ({ user }) => {
   const [leaderboard, setLeaderboard] = useState(null);
   const [upgrades, setUpgrades] = useState(null);
   const [gameState, setGameState] = useState(null);
+  const [upgrading, setUpgrading] = useState(null);
 
   const avgGrowth = useMemo(() => {
     if (!upgrades || !gameState?.upgrades) return 0;
@@ -29,6 +30,11 @@ const Game = ({ user }) => {
     if (!gameState?.upgrades) return 0;
     return gameState.upgrades.reduce((l, r) => l + r.level, 0);
   }, [gameState]);
+
+  const clickPower = useMemo(() => {
+    if (!user) return 0;
+    return 0.001 * (userLevel + 1) + (Math.pow(userLevel, 3) / 100000);
+  }, [userLevel]);
 
   const score = useMemo(() => {
     return gameState?.score || 0;
@@ -83,6 +89,9 @@ const Game = ({ user }) => {
       socketClient.on("leaderboard", (users) => {
         setLeaderboard(users);
       });
+      socketClient.on("upgraded", () => {
+        setUpgrading(null);
+      });
 
       // set
       setClient(socketClient);
@@ -122,7 +131,7 @@ const Game = ({ user }) => {
               user ? 
                 <div className="p-2">
                   <h1 className="text-lg font-bold">Taso {userLevel}</h1>
-                  <p>klikkausvoima: <b><Score value={0.001 * Math.pow(1.15, userLevel)}/></b></p>
+                  <p>klikkausvoima: <b><Score value={clickPower}/></b></p>
                   <p>keskimääräinen kasvuvauhti: <b><Score value={avgGrowth}/> sekunnissa</b></p>
                 </div>
                 : null
@@ -151,7 +160,11 @@ const Game = ({ user }) => {
                 const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level) : upgrade.score;
                 const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
                 const isClickable = score >= cost;
-                const onClick = () => clickUpgrade(upgrade.type);
+                const onClick = () => {
+                  if (!isClickable || upgrading !== null) return;
+                  clickUpgrade(upgrade.type);
+                  setUpgrading(upgrade.type);
+                };
 
                 return (
                   <li
