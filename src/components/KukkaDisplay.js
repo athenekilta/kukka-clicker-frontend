@@ -5,7 +5,7 @@ import Score from "./Score";
 
 let mem = null;
 
-const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
+const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
   const createScene = () => {
     const scene = document.getElementById("kukka-scene");
     if (!scene) return;
@@ -47,7 +47,7 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
     // leaves
     const arrows = [];
     const arrowTexture = PIXI.Texture.from("/assets/arrow.png");
-    const ARROW_AMOUNT = upgrades.reduce((l, r) => l + r.level, 0);
+    const ARROW_AMOUNT = userLevel;
     for (let i = 0; i < ARROW_AMOUNT; ++i) {
       const arrow = new PIXI.Sprite(arrowTexture);
       arrow.anchor.set(0.5);
@@ -126,7 +126,7 @@ const KukkaDisplay = ({ score, user, upgrades, clickKukka }) => {
         mem = null;
       }
     };
-  }, []);
+  }, [userLevel]);
 
   useEffect(()=> {
     if (mem) {
