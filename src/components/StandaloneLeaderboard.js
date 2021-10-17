@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import React, { useState, useEffect} from "react";
 import { io } from "socket.io-client";
 import { baseUrl } from "../services/authService";
 import Leaderboard from "./Leaderboard";
