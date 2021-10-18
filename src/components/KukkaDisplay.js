@@ -49,19 +49,17 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     // leaves
     const arrows = [];
     const arrowTexture = PIXI.Texture.from("/assets/arrow.png");
+
     const createArrow = () => {
       const arrow = new PIXI.Sprite(arrowTexture);
       arrow.anchor.set(0.5);
+      arrow.rotation = Math.PI / 2;
       arrow.x = Math.random() * app.screen.width;
       arrow.y = Math.random() * app.screen.height;
-      // leaf.x = Math.random() * app.screen.width;
-      // leaf.y = Math.random() * app.screen.height;
-      arrow.rotation = Math.PI / 2;
       const scale = Math.max(Math.random() * 0.75, 0.3);
       arrow.scale.x = scale;
       arrow.scale.y = scale;
-      arrow.zIndex = Math.floor(scale * 1000);
-      arrow.speed = scale * 5;
+      arrow.speed = scale * 10;
       arrows.push(arrow);
       app.stage.addChild(arrow);
     };
