@@ -27,7 +27,7 @@ const QUOTES = [
   },
   {
     value: 1000, 
-    description: "tämähän on mukavaa ajanviihdettä" 
+    description: "tämähän on mukavaa ajanvietettä" 
   },
   {
     value: 2000, 
@@ -42,7 +42,11 @@ const QUOTES = [
     description: "onko se lintu, onko se lentokone?"
   },
   {
-    value: 1000000000, 
+    value: 10000000,
+    description: "nu kör vi!"
+  },
+  {
+    value: 10000000000, 
     description: "ai saaataaaanaaaaa" 
   },
 ].sort((l, r) => r.value - l.value);
