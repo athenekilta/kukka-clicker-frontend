@@ -4,7 +4,7 @@ import Score from "./Score";
 const Leaderboard = ({ leaderboard = [] })=> {
   return (
     <article className="p-2">
-      <h1 className="text-lg font-bold">Isoimmat kasvattajat</h1>
+      <h1 className="text-xl font-bold my-2 mb-1 pt-px">Top 10: Isoimmat kasvattajat</h1>
       <ul>
         {leaderboard?.map((user, i) => {
           const medal = i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : null;

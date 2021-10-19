@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Auth from "./components/Auth";
 import Game from "./components/Game";
 import authService from "./services/authService";
-import "./App.scss";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -22,7 +21,7 @@ const App = () => {
       {
         user
           ? <Game user={user} />
-          : <Auth setUser={setUser} />
+          : <Auth user={user} setUser={setUser} />
       }
     </main>
   );

@@ -115,7 +115,6 @@ const Game = ({ user }) => {
 
   return (
     <div className="md:grid grid-cols-2 select-none">
-      
       <div>  
         {gameState ?
           <KukkaDisplay score={score} user={user} userLevel={userLevel} clickKukka={clickKukka} />
@@ -136,70 +135,72 @@ const Game = ({ user }) => {
                 </div>
                 : null
             }
+
             <div className="p-2">
               <h1 className="text-lg font-bold">Päivitykset</h1>
               <p className="text-xs italic"> Päivitykset kasvattavat kukkaa puolestasi. Päivitykset myös korottavat tasoasi, mikä nostaa klikkausvoimaa. Osta tai paranna päivityksiä klikkaamalla niitä!</p>
             </div>
 
-            <ul>{upgrades
-              .filter((upgrade) => {
-                const alkurString = "Alkuräjähdys 2.0";
-                const allUnlocked = !gameState ? false : gameState
-                  .upgrades
-                  .map(u => u.type)
-                  .includes(alkurString);
-                const alkur = upgrades.find(u => u.type === alkurString);
-                const isEarlyGame = upgrades
-                  .filter(u => u.cost <= alkur.cost)
-                  .map(u => u.type)
-                  .includes(upgrade.type);
-                return allUnlocked || isEarlyGame;
-              })
-              .map((upgrade) => {
-                const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
-                const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level) : upgrade.score;
-                const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
-                const isClickable = score >= cost;
-                const onClick = () => {
-                  if (!isClickable || upgrading !== null) return;
-                  clickUpgrade(upgrade.type);
-                  setUpgrading(upgrade.type);
-                };
+            <ul>
+              {upgrades
+                .filter((upgrade) => {
+                  const alkurString = "Alkuräjähdys 2.0";
+                  const allUnlocked = !gameState ? false : gameState
+                    .upgrades
+                    .map(u => u.type)
+                    .includes(alkurString);
+                  const alkur = upgrades.find(u => u.type === alkurString);
+                  const isEarlyGame = upgrades
+                    .filter(u => u.cost <= alkur.cost)
+                    .map(u => u.type)
+                    .includes(upgrade.type);
+                  return allUnlocked || isEarlyGame;
+                })
+                .map((upgrade) => {
+                  const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
+                  const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level) : upgrade.score;
+                  const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
+                  const isClickable = score >= cost;
+                  const onClick = () => {
+                    if (!isClickable || upgrading !== null) return;
+                    clickUpgrade(upgrade.type);
+                    setUpgrading(upgrade.type);
+                  };
 
-                return (
-                  <li
-                    key={upgrade.type}
-                    className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-blue-200 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
-                    onClick={isClickable ? onClick : undefined}
-                  >
-                    <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
+                  return (
+                    <li
+                      key={upgrade.type}
+                      className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-blue-200 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
+                      onClick={isClickable ? onClick : undefined}
+                    >
+                      <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
 
-                    <div className="flex flex-col md:flex-row justify-between md:items-center">
-                      <p className="font-bold text-lg">{upgrade.type}</p>
-                      <p className="text-xs italic">{upgrade.description}</p>
-                      <span className="whitespace-nowrap font-bold">taso {usersUpgrade?.level || 0}</span>
-                    </div>
+                      <div className="flex flex-col md:flex-row justify-between md:items-center">
+                        <p className="font-bold text-lg">{upgrade.type}</p>
+                        <p className="text-xs italic">{upgrade.description}</p>
+                        <span className="whitespace-nowrap font-bold">taso {usersUpgrade?.level || 0}</span>
+                      </div>
 
-                    <p>tuotto
-                      <b> <Score value={profit}/> </b>
+                      <p>tuotto
+                        <b> <Score value={profit}/> </b>
                       joka <b>{(upgrade.time_interval / 1000).toString().replace(".", ",")}. sekunti</b>
-                      <em> (<Score value={profit/upgrade.time_interval*1000} />/sekunti)</em>
-                    </p>
+                        <em> (<Score value={profit/upgrade.time_interval*1000} />/sekunti)</em>
+                      </p>
                     
-                    <p className="text-xs italic">
-                      {usersUpgrade
-                        ? "päivityksen hinta"
-                        : "hinta"
-                      }: <Score value={cost} />
-                      {usersUpgrade ? 
-                        <>
-                          <span> – tuotto </span>
+                      <p className="text-xs italic">
+                        {usersUpgrade
+                          ? "päivityksen hinta"
+                          : "hinta"
+                        }: <Score value={cost} />
+                        {usersUpgrade ? 
+                          <>
+                            <span> – tuotto </span>
                           +<Score value={(upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level + 1)) - profit}/>
-                        </> : null}
-                    </p>        
-                  </li>
-                );
-              })}
+                          </> : null}
+                      </p>        
+                    </li>
+                  );
+                })}
             </ul>
           </>
           : null}

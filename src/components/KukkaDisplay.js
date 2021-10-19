@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as PIXI from "pixi.js";
 import GameQuote from "./GameQuote";
 import Score from "./Score";
+import Header from "./Header";
 
 const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
   const [pixiApp, setPixiApp] = useState(null);
@@ -158,26 +159,13 @@ const KukkaDisplay = ({ score, user, userLevel, clickKukka }) => {
     }
   }, [score]);
 
-  const logout = () => {
-    if (window.confirm("Haluatko kirjautua ulos?")) {
-      window.localStorage.clear();
-      window.location.reload(true);
-    }
-  };
-
   return (
     <div className="w-full relative cursor-pointer">
       <canvas id="kukka-scene" className="w-full" onPointerDown={ clickKukka } />
-
-      <div className="absolute top-0 left-0 z-10 w-full h-full pointer-events-none">
-        <div className="flex flex-col md:flex-row w-full justify-between md:items-center p-2 md:p-4">
-          <h1 className="md:text-lg font-bold">Kukan kasvatus peli</h1>
-          <p className="md:text-lg font-bold">
-            { user ? `Kirjautunut pelaaja: ${user.username}` : null }
-            <a className="pointer-events-auto text-sm" href="#" onClick={() => logout()}> (kirjaudu ulos)</a>
-          </p>
-        </div>
-
+      <div
+        className="absolute top-0 left-0 z-10 w-full h-full pointer-events-none"
+      >
+        <Header user={user} />
         <div
           style={{ background: "linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)" }}
           className="absolute bottom-0 left-0 flex flex-col items-center p-4 w-full"
