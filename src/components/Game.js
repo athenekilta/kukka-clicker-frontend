@@ -130,6 +130,7 @@ const Game = ({ user }) => {
               user ? 
                 <div className="p-2">
                   <h1 className="text-lg font-bold">{user.username}: taso {userLevel}</h1>
+                  <p>klikkaukset: <b>{gameState?.clicks || 0}</b></p>
                   <p>klikkausvoima: <b><Score value={clickPower}/></b></p>
                   <p>kasvuvauhti: <b><Score value={avgGrowth}/> sekunnissa</b></p>
                 </div>
