@@ -6,6 +6,10 @@ const QUOTES = [
     description: "kasvata kukkaa klikkaamalla"
   },
   {
+    value: 0.5, 
+    description: "muistithan klikkaamisen lisäksi myös kastella kukkaa?"
+  },
+  {
     value: 1, 
     description: "kukka alkaa nousta penkistä" 
   },
@@ -42,6 +46,10 @@ const QUOTES = [
     description: "onko se lintu, onko se lentokone?"
   },
   {
+    value: 1e6, 
+    description: "ei kannata katsoa alaspäin..."
+  },
+  {
     value: 1e7,
     description: "nu kör vi!"
   },
@@ -54,20 +62,41 @@ const QUOTES = [
     description: "ai saaataaaanaaaaa" 
   },
   {
-    value: 1e25, 
+    value: 1e16, 
+    description: "onko tässä pelissä mitään järkeä?" 
+  },
+  {
+    value: 1e22, 
     description: "se on kaikkialla!!" 
   },
   {
-    value: 1e27, 
+    value: 1e28, 
+    description:
+      "ja näin kukka on vapautettu SI-järjestelmän kerrannaisyksiköiden ikeestä" 
+  },
+  {
+    value: 1e32, 
     description: "mihin kasvaminen loppuu, täytyyhän sen joskus loppua" 
   },
   {
-    value: 1e30, 
-    description: "we are in the endgame now" 
+    value: 1e35, 
+    description: "täytyyhän sen loppua?" 
   },
   {
     value: 1e37, 
+    description: "we are in the endgame now" 
+  },
+  {
+    value: 1e42, 
     description: "nyt voidaan turvallisesti todeta että aika suureksi on kukka kasvanut" 
+  },
+  {
+    value: 1e50, 
+    description: "mitenköhän pitkälle näitä tekstejä riittää?" 
+  },
+  {
+    value: 1e100, 
+    description: "milloin tulee javascriptin rajat vastaan?" 
   },
 ].sort((l, r) => r.value - l.value);
 
