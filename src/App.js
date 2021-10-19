@@ -81,11 +81,14 @@ const App = () => {
           <>
             <Header user={null} />
             <main className="flex flex-col items-center w-full text-center">
-              <div className="max-w-md my-8 p-2 md:p-4 w-full">
-                <h1 className="font-bold text-4xl">Kasvukausi alkaa</h1>
-                <Timer time={season.season_start} ended={ended} className="block font-bold text-6xl my-4" />
-                <p>
-                Oletko valmis? Voittajille luvassa palkintoja!
+              <div className="max-w-xl my-8 p-2 md:p-4 w-full">
+                <h1 className="font-bold text-2xl md:text-4xl">Kasvukausi alkaa!</h1>
+                <Timer time={season.season_start} ended={ended} className="block font-bold text-4xl md:text-6xl my-4" />
+                <h2 className="font-bold text-xl md:text-2xl mb-2 text-gray-600">
+                  Oletko valmis?
+                </h2>
+                <p className="text-gray-400">
+                  Nyt on aika laittaa puutarhahanskat käteen ja virittää klikkaushermot äärimmilleen. Kukan digiloikkaajat tarjoaa syksyyn loputonta kasvua. Kasvukauden menestyjille on luvassa palkintoja!
                 </p>
               </div>
             </main>
