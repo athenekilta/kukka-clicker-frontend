@@ -129,9 +129,9 @@ const Game = ({ user }) => {
             {
               user ? 
                 <div className="p-2">
-                  <h1 className="text-lg font-bold">{user.username}: Taso {userLevel}</h1>
+                  <h1 className="text-lg font-bold">{user.username}: taso {userLevel}</h1>
                   <p>klikkausvoima: <b><Score value={clickPower}/></b></p>
-                  <p>keskimääräinen kasvuvauhti: <b><Score value={avgGrowth}/> sekunnissa</b></p>
+                  <p>kasvuvauhti: <b><Score value={avgGrowth}/> sekunnissa</b></p>
                 </div>
                 : null
             }
