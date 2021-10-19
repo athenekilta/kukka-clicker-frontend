@@ -15,7 +15,7 @@ const Leaderboard = ({ leaderboard })=> {
               <div
                 key={type}
                 onClick={() => setActive(type)}
-                className={`cursor-pointer md:hover:bg-gray-200 px-2 py-1 ${isActive ? "font-bold border-b border-gray-400" : ""}`}
+                className={`cursor-pointer rounded-t-lg md:hover:bg-gray-200 px-2 py-1 ${isActive ? "font-bold border-b border-gray-400" : ""}`}
               >
                 <p className={"text-center"}>
                   {name}

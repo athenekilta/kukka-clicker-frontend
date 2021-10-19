@@ -5,16 +5,26 @@ import { baseUrl, getToken } from "../services/authService";
 import UpgradeRewardProgress from "./UpgradeRewardProgress";
 import KukkaDisplay from "./KukkaDisplay";
 import Score from "./Score";
+import Timer from "./Timer";
 
 /**
  * The main game component
  */
-const Game = ({ user }) => {
+const Game = ({ user, season_end }) => {
   const [client, setClient] = useState(null);
   const [leaderboard, setLeaderboard] = useState(null);
   const [upgrades, setUpgrades] = useState(null);
   const [gameState, setGameState] = useState(null);
   const [upgrading, setUpgrading] = useState(null);
+
+  const timer = useMemo(() => {
+    if (!season_end) return null;
+    return <Timer 
+      time={season_end} 
+      ended={() => window.location.reload(true)}
+      className="font-bold" 
+    />;
+  }, [season_end]);
 
   const avgGrowth = useMemo(() => {
     if (!upgrades || !gameState?.upgrades) return 0;
@@ -122,7 +132,16 @@ const Game = ({ user }) => {
       </div>
 
       <div className="md:h-screen overflow-y-auto">
-        <Leaderboard leaderboard={leaderboard} />
+        {
+          leaderboard ? <Leaderboard leaderboard={leaderboard} /> : null
+        }
+        {
+          season_end ?
+            <p className="px-2 mb-2">
+              kasvukausi loppuu: {timer}
+            </p> : null
+        }
+        
         {/* Upgrades listed here */}
         {upgrades ? 
           <>
