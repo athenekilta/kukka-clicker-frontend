@@ -158,8 +158,8 @@ const Game = ({ user }) => {
                 })
                 .map((upgrade) => {
                   const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
-                  const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level) : upgrade.score;
-                  const cost = usersUpgrade ? upgrade.cost * Math.pow(2, usersUpgrade.level) : upgrade.cost;
+                  const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level - 1) : upgrade.score;
+                  const cost = usersUpgrade ? upgrade.cost * Math.pow(4.2, usersUpgrade.level) : upgrade.cost;
                   const isClickable = score >= cost;
                   const onClick = () => {
                     if (!isClickable || upgrading !== null) return;
@@ -184,7 +184,7 @@ const Game = ({ user }) => {
                       <p>tuotto
                         <b> <Score value={profit}/> </b>
                       joka <b>{(upgrade.time_interval / 1000).toString().replace(".", ",")}. sekunti</b>
-                        <em> (<Score value={profit/upgrade.time_interval*1000} />/sekunti)</em>
+                        <em> (<Score value={profit/upgrade.time_interval*1000} /> sekunnissa)</em>
                       </p>
                     
                       <p className="text-xs italic">
