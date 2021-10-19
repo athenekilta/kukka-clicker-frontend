@@ -129,7 +129,7 @@ const Game = ({ user }) => {
             {
               user ? 
                 <div className="p-2">
-                  <h1 className="text-lg font-bold">Taso {userLevel}</h1>
+                  <h1 className="text-lg font-bold">{user.username}: Taso {userLevel}</h1>
                   <p>klikkausvoima: <b><Score value={clickPower}/></b></p>
                   <p>keskimääräinen kasvuvauhti: <b><Score value={avgGrowth}/> sekunnissa</b></p>
                 </div>
@@ -170,7 +170,7 @@ const Game = ({ user }) => {
                   return (
                     <li
                       key={upgrade.type}
-                      className={`relative p-2 md:p-4 ${isClickable ? "hover:bg-blue-200 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
+                      className={`relative p-2 md:p-4 ${isClickable ? "focus:bg-blue-200 md:hover:bg-blue-200 cursor-pointer" : "opacity-50 cursor-not-allowed"}`}
                       onClick={isClickable ? onClick : undefined}
                     >
                       <UpgradeRewardProgress score={score} cost={cost} upgrade={usersUpgrade} upgradeDefinition={upgrade} />
@@ -181,7 +181,7 @@ const Game = ({ user }) => {
                         <span className="whitespace-nowrap font-bold">taso {usersUpgrade?.level || 0}</span>
                       </div>
 
-                      <p>tuotto
+                      <p>Tuotto
                         <b> <Score value={profit}/> </b>
                       joka <b>{(upgrade.time_interval / 1000).toString().replace(".", ",")}. sekunti</b>
                         <em> (<Score value={profit/upgrade.time_interval*1000} /> sekunnissa)</em>
@@ -189,12 +189,12 @@ const Game = ({ user }) => {
                     
                       <p className="text-xs italic">
                         {usersUpgrade
-                          ? "päivityksen hinta"
-                          : "hinta"
+                          ? "Päivityksen hinta"
+                          : "Hinta"
                         }: <Score value={cost} />
                         {usersUpgrade ? 
                           <>
-                            <span> – tuotto </span>
+                            <span> – Tuotto </span>
                           +<Score value={(upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level + 1)) - profit}/>
                           </> : null}
                       </p>        
@@ -208,6 +208,7 @@ const Game = ({ user }) => {
         <div className="footer p-6 w-full">
           <p className="text-center text-gray-300">Copyright 2021, Kukan digiloikkaajat – Oliver, Sampo & Joel</p>
           <p className="text-center text-gray-300">Tehty kukkaviikonlopun aikana ilman ulkopuolista rahoitusta</p>
+          <p className="text-center text-gray-300">Taidetyö on Hillan tekemä</p>
           <p className="text-center text-gray-300"><a href="https://kukka.digital" target="_blank" rel="noreferrer" className="underline">kukka.digital</a></p>
         </div>
       </div>

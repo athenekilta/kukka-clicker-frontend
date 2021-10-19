@@ -32,7 +32,7 @@ const UpgradeRewardProgress = ({ score, cost, upgrade, upgradeDefinition }) => {
       <div
         id={`${upgradeDefinition.type}__`}
         style={{ width: `${costWidth}%` }}
-        className={`absolute top-0 left-0 h-full ${upgrade?.level ? "bg-green-200" : "bg-gray-200"}`}
+        className={`absolute top-0 left-0 h-full ${upgrade?.level || costWidth === 100 ? "bg-green-200" : "bg-gray-200"}`}
       />
       <div id={upgradeDefinition.type} className="absolute bottom-0 left-0 h-px bg-blue-600" />
     </div>

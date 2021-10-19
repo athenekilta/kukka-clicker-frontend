@@ -76,7 +76,7 @@ const GameQuote = ({ score = 0 }) => {
     return QUOTES.find((q) => q.value <= score).description;
   }, [score]);
 
-  return <p className="text-base text-gray-700">&quot;{quote}&quot;</p>;
+  return <p className="text-base text-gray-700 text-center">&quot;{quote}&quot;</p>;
 };
 
 export default GameQuote;

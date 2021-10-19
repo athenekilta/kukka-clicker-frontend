@@ -12,7 +12,7 @@ const Header = ({ user }) => {
   return (
     <header
       style={{ background: "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)" }}
-      className="w-full h-16"
+      className="w-full pb-16"
     >
       <div className="flex flex-row w-full justify-between items-center p-2 md:p-4">
         <div className="inline-flex items-center">
