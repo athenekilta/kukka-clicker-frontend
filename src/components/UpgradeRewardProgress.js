@@ -9,7 +9,7 @@ const UpgradeRewardProgress = ({ score, cost, upgrade, upgradeDefinition }) => {
         // time for reward
         const div = document.getElementById(upgrade.type);
         if (div) {
-          div.style.width = `${((((Date.now() - upgrade.previous_time) / upgradeDefinition.time_interval) * 100) % 100) * 1.05}%`;
+          div.style.width = `${(((Date.now() - upgrade.previous_time) / upgradeDefinition.time_interval) * 100) % 100}%`;
         }
       }
       requestAnimationFrame(() => {
@@ -28,7 +28,7 @@ const UpgradeRewardProgress = ({ score, cost, upgrade, upgradeDefinition }) => {
   return (
     <div      
       style={{ zIndex: -1 }} 
-      className="absolute top-0 left-0 h-full w-full">
+      className="absolute top-0 left-0 h-full w-full overflow-hidden">
       <div
         id={`${upgradeDefinition.type}__`}
         style={{ width: `${costWidth}%` }}
