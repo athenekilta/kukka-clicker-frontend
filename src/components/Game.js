@@ -50,8 +50,9 @@ const Game = ({ user, season_end }) => {
   }, [upgrades, gameState]);
 
   const userLevel = useMemo(() => {
-    if (!gameState?.upgrades) return 0;
-    return gameState.upgrades.reduce((l, r) => l + r.level, 0);
+    if (!gameState?.level) return 0;
+    return gameState.level;
+    // return gameState.upgrades.reduce((l, r) => l + r.level, 0);
   }, [gameState]);
 
   const clickPower = useMemo(() => {
