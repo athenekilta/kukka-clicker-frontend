@@ -8,6 +8,19 @@ import Score from "./Score";
 import Timer from "./Timer";
 
 /**
+ * click function :) don't leak!
+ */
+const clickScore = (level) => {
+  let score = 0;
+  if (level <= 116) {
+    score = 0.001 * (Math.pow(level, 2) + Math.pow(1.2, level));
+  } else {
+    score = Math.pow(level, 3);
+  }
+  return Math.min(Math.max(0, score), 1e20);
+};
+
+/**
  * The main game component
  */
 const Game = ({ user, season_end }) => {
@@ -43,7 +56,7 @@ const Game = ({ user, season_end }) => {
 
   const clickPower = useMemo(() => {
     if (!user) return 0;
-    return 0.001 * (userLevel + 1) + (Math.pow(userLevel, 3) / 100000);
+    return clickScore(userLevel);
   }, [userLevel]);
 
   const score = useMemo(() => {
