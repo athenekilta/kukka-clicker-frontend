@@ -17,7 +17,7 @@ const Header = ({ user }) => {
       <div className="flex flex-row w-full justify-between items-center p-2 md:p-4">
         <div className="inline-flex items-center">
           <img src="/assets/kukka.png" width="32" height="32" className="w-8 h-8" />
-          <h1 className="text-lg font-bold ml-4">Kukan kasvatus peli</h1>
+          <h1 className="text-lg font-bold ml-4">Kukan kasvatus peli (sic)</h1>
         </div>
         
         <div className="inline-flex items-center">
