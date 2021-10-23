@@ -178,17 +178,24 @@ const Game = ({ user, season_end }) => {
             <ul>
               {upgrades
                 .filter((upgrade) => {
+                  if (!gameState) return false;
                   const alkurString = "Alkuräjähdys 2.0";
                   const allUnlocked = !gameState ? false : gameState
                     .upgrades
                     .map(u => u.type)
                     .includes(alkurString);
-                  const alkur = upgrades.find(u => u.type === alkurString);
-                  const isEarlyGame = upgrades
-                    .filter(u => u.cost <= alkur.cost)
-                    .map(u => u.type)
-                    .includes(upgrade.type);
-                  return allUnlocked || isEarlyGame;
+                  const upgradeNames = upgrades.map(u => u.type);
+                  const upgradeIndex = upgradeNames.indexOf(upgrade.type);
+                  const alkurIndex = upgradeNames.indexOf(alkurString);
+                  const highestBought = Math.max(
+                    ...gameState.upgrades.map(u => upgradeNames.indexOf(u.type))
+                  );
+                  const isVisible =
+                       upgradeIndex < 1
+                    || upgradeIndex <= highestBought + 1
+                    && upgradeIndex <= alkurIndex;
+              
+                  return allUnlocked || isVisible;
                 })
                 .map((upgrade) => {
                   const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
