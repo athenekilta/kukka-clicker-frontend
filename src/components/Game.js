@@ -199,7 +199,7 @@ const Game = ({ user, season_end }) => {
                 })
                 .map((upgrade) => {
                   const usersUpgrade = gameState?.upgrades.find((up) => up.type === upgrade.type);
-                  const profit = usersUpgrade ? upgrade.score + upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level - 1) : upgrade.score;
+                  const profit = usersUpgrade ? upgrade.score * Math.pow(upgrade.ratio, usersUpgrade.level - 1) : upgrade.score;
                   const cost = usersUpgrade ? upgrade.cost * Math.pow(4.2, usersUpgrade.level) : upgrade.cost;
                   const isClickable = score >= cost;
                   const onClick = () => {
