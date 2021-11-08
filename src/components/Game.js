@@ -20,6 +20,10 @@ const clickScore = (level) => {
   return Math.min(Math.max(0, score), 1e20);
 };
 
+// click array
+const click_times = [];
+const rate_limit = 10;
+
 /**
  * The main game component
  */
@@ -65,8 +69,29 @@ const Game = ({ user, season_end }) => {
   }, [gameState]);
 
   const clickKukka = () => {
-    if (!client) return; 
-    client.emit("click");
+    if (!client) return;
+
+    const now = Date.now();
+    let isClick = false;
+
+    // check rate limit
+    if (click_times.length === 0) {
+      isClick = true;
+    } else if (click_times.length < rate_limit) {
+      isClick = true;
+    } else {
+      const rateLimitClicksAgo = click_times[0];
+      if (rateLimitClicksAgo + 1000 < now) {
+        isClick = true;
+      }
+    }
+
+    // click
+    if (isClick) {
+      click_times.shift();
+      click_times.push(now);
+      client.emit("click");
+    }
   };
 
   const clickUpgrade = (type) => {
