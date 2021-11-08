@@ -22,7 +22,7 @@ const clickScore = (level) => {
 
 // click array
 const click_times = [];
-const rate_limit = 10;
+const rate_limit = 14;
 
 /**
  * The main game component
@@ -72,15 +72,14 @@ const Game = ({ user, season_end }) => {
     if (!client) return;
 
     const now = Date.now();
+    click_times.push(now);
     let isClick = false;
 
     // check rate limit
-    if (click_times.length === 0) {
-      isClick = true;
-    } else if (click_times.length < rate_limit) {
+    if (click_times.length < rate_limit) {
       isClick = true;
     } else {
-      const rateLimitClicksAgo = click_times[0];
+      const rateLimitClicksAgo = click_times.shift();
       if (rateLimitClicksAgo + 1000 < now) {
         isClick = true;
       }
@@ -88,8 +87,6 @@ const Game = ({ user, season_end }) => {
 
     // click
     if (isClick) {
-      click_times.shift();
-      click_times.push(now);
       client.emit("click");
     }
   };
