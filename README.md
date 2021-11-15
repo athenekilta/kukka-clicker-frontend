@@ -7,6 +7,8 @@ All code is MIT licensed.
 
 **Any image files in this repository are unlicensed and thus all rights are reserved.**
 
+# create-react-app information
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
