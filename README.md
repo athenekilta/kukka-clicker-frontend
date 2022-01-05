@@ -1,4 +1,13 @@
-# Getting Started with Create React App
+# [kukka clicker](https://clicker.kukka.digital) frontend
+
+This repository contains the React frontend for the fancy kukka clicker game.
+
+## License
+All code is MIT licensed.
+
+**Any image files in this repository are unlicensed and thus all rights are reserved.**
+
+# create-react-app information
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
